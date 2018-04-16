@@ -3,11 +3,8 @@ const jwt = require('jsonwebtoken')
 
 module.exports = {
   addTodo: function (req, res) {
-    // const token = req.headers.token
-    // const decoded = jwt.verify(token, process.env.SECRET)
-    const decoded = {
-      _id: req.headers._id
-    }
+    const token = req.headers.token
+    const decoded = jwt.verify(token, process.env.SECRET)
     const todo = new Todo ()
     todo.owner = decoded._id
     todo.task = req.body.task
@@ -23,16 +20,15 @@ module.exports = {
     })
   },
   getAllTodo: function (req, res) {
-    // let token = req.headers.token
-    // let decoded = jwt.verify(token, process.env.SECRET)
-    const decoded = {
-      _id: req.headers._id
-    }
+    let token = req.headers.token
+    let decoded = jwt.verify(token, process.env.SECRET)
     Todo.find({owner: decoded._id})
-    .then(task => {
+    .populate('owner')
+    .exec()
+    .then(todo => {
       res.status(200).json({
         message: 'List All Todo',
-        task
+        todo
       })
     })
     .catch(err => {
@@ -40,15 +36,15 @@ module.exports = {
     })
   },
   deleteTodo: function (req, res) {
-    Todo.remove({_id: req.headers._id})
-    .then(task => {
+    Todo.remove({_id: req.params._id})
+    .then(todo => {
       res.status(201).json({
         message: 'Todo Deleted'
       })
     })
   },
   toggleDone: function (req, res) {
-    Todo.findOne({_id: req.headers._id})
+    Todo.findOne({_id: req.params._id})
     .then(data => {
       res.status(201).json({
         message: 'This Todo',
@@ -57,7 +53,7 @@ module.exports = {
       if (data) {
         data.done = !data.done
         Todo.update({
-          _id: req.headers._id
+          _id: req.params._id
         }, {
           $set: {done: data.done}
         }).then(() => {

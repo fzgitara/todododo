@@ -5,9 +5,12 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var jwt = require('jsonwebtoken')
+var cors = require('cors')
 require('dotenv').config();
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/todododo', (err => {
+let dbuser = process.env.DBuser
+let dbpassword = process.env.DBpassword
+mongoose.connect(`mongodb://${dbuser}:${dbpassword}@ds239359.mlab.com:39359/todododo`, (err => {
   if(err){
     console.log('failed to connect');
   } else {
@@ -27,6 +30,7 @@ app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(cors())
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

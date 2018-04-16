@@ -4,7 +4,7 @@ const {getAllUser, addUser, login, editUser, deleteUser} = require('../controlle
 
 /* GET users listing. */
 router.get('/', getAllUser)
-router.post('/', addUser)
+router.post('/register', addUser)
 router.post('/login', login)
 router.put('/:_id', editUser)
 router.delete('/:_id', deleteUser)
