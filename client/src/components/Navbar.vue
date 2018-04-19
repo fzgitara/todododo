@@ -1,9 +1,11 @@
 <template>
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://bulma.io">
-        <img src="../assets/logo.png" height="28"> <strong>Todododo</strong>
-      </a>
+      <router-link to="/">
+        <a class="navbar-item">
+          <img src="../assets/logo.png" height="28"> <strong>Todododo</strong>
+        </a>
+      </router-link>
     </div>
     <div class="navbar-menu" v-show="token!=null">
       <div class="navbar-end">

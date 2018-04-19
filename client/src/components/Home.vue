@@ -83,6 +83,7 @@
 <script>
 import axios from 'axios'
 import swal from 'sweetalert2'
+
 export default {
   data () {
     return {
@@ -90,6 +91,18 @@ export default {
       task: '',
       todoList: [],
       name: ''
+    }
+  },
+  beforeRouteEnter: (to, from, next) => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      next()
+    } else {
+      swal(
+        'Login first!',
+        'You must login first before enter this site',
+        'error'
+      ).then(() => this.$router.push({path: '/'}))
     }
   },
   created () {
@@ -124,7 +137,8 @@ export default {
           'New task created',
           'success'
         ).then(result => {
-          location.reload()
+          this.modalDeactive()
+          this.showAll()
         })
       })
     },
@@ -135,7 +149,7 @@ export default {
           'Your task is done!',
           'success'
         ).then(result => {
-          location.reload()
+          this.showAll()
         })
       })
     },
@@ -155,7 +169,7 @@ export default {
               'Deleted!',
               'Your task has been deleted.',
               'success'
-            ).then(() => location.reload())
+            ).then(() => this.showAll())
           }
         })
       })
