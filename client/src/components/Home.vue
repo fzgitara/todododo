@@ -116,7 +116,7 @@ export default {
       this.modal = 'modal'
     },
     showAll () {
-      axios.get('http://localhost:3000/todo', {
+      axios.get('http://server-todo.fachrizal.com/todo', {
         headers: {token: localStorage.getItem('token')}
       }).then(response => {
         this.todoList = response.data.todo
@@ -124,7 +124,7 @@ export default {
       })
     },
     add () {
-      axios.post('http://localhost:3000/todo', {
+      axios.post('http://server-todo.fachrizal.com/todo', {
         task: this.task
       }, {
         headers: {
@@ -143,7 +143,7 @@ export default {
       })
     },
     done (value) {
-      axios.put(`http://localhost:3000/todo/${value._id}`).then(response => {
+      axios.put(`http://server-todo.fachrizal.com/todo/${value._id}`).then(response => {
         swal(
           'Done!',
           'Your task is done!',
@@ -154,7 +154,7 @@ export default {
       })
     },
     del (value) {
-      axios.delete(`http://localhost:3000/todo/${value._id}`).then(response => {
+      axios.delete(`http://server-todo.fachrizal.com/todo/${value._id}`).then(response => {
         swal({
           title: 'Are you sure?',
           text: "You won't be able to revert this!",

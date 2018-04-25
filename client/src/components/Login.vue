@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     login () {
-      axios.post('http://localhost:3000/users/login', {
+      axios.post('http://server-todo.fachrizal.com/users/login', {
         email: this.email,
         password: this.password
       }).then(response => {
@@ -52,9 +52,9 @@ export default {
           'You are logged in',
           'success'
         ).then(() => {
-          this.$router.push({path: '/home'})
           localStorage.setItem('token', response.data.token)
-          location.reload()
+          this.$router.push({path: '/home'})
+          // location.reload()
         })
       })
     }

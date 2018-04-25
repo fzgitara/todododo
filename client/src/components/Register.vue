@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     register () {
-      axios.post('http://localhost:3000/users/register', {
+      axios.post('http://server-todo.fachrizal.com/users/register', {
         name: this.name,
         email: this.email,
         password: this.password
